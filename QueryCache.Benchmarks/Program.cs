@@ -1,15 +1,21 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using QueryCache;
 
 BenchmarkRunner.Run<CalculateCacheKeyBenchmarks>();
 
 [MemoryDiagnoser]
+[SimpleJob(RuntimeMoniker.Net48)]
+[SimpleJob(RuntimeMoniker.Net70)]
 public class CalculateCacheKeyBenchmarks
 {
     private IQueryable<Account> Query { get; set; }
+
+    [Params(1, 2, 3, 4, 5)]
+    public int WhereClauses;
 
     [GlobalSetup]
     public void Setup()
@@ -20,7 +26,12 @@ public class CalculateCacheKeyBenchmarks
             "Operator2"
         };
 
-        Query = new List<Account>().AsQueryable().Where(x => containsData.Contains(x.Name));
+        Query = new List<Account>().AsQueryable();
+
+        for (int i = 0; i < WhereClauses; i++)
+        {
+           Query = Query.Where(x => containsData.Contains(x.Name));
+        }
     }
     
     [Benchmark]
