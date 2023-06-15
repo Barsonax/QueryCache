@@ -2,16 +2,16 @@
 
 namespace QueryCache;
 
-internal class EvaluateVisitor : ExpressionVisitor
+internal sealed class EvaluateVisitor : ExpressionVisitor
 {
-    public override Expression? Visit(Expression? node) =>
+    protected override Expression VisitMember(MemberExpression node) =>
+        CanEvaluate(node) ? Expression.Constant(MemberExpressionEvaluator.Evaluate(node)) : node;
+
+    private bool CanEvaluate(MemberExpression node) =>
         node switch
         {
-            MemberExpression memberExpression => memberExpression switch
-            {
-                { Expression.NodeType: ExpressionType.Parameter } => memberExpression,
-                _ => Expression.Constant(Expression.Lambda(memberExpression).Compile(true).DynamicInvoke())
-            },
-            _ => base.Visit(node)
+            { Expression.NodeType: ExpressionType.Parameter } => false,
+            { Expression: MemberExpression nestedMemberExpression } => CanEvaluate(nestedMemberExpression),
+            _ => true
         };
 }

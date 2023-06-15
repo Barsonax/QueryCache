@@ -3,19 +3,15 @@ using System.Linq.Expressions;
 
 namespace QueryCache;
 
-internal class PrintCollectionVisitor : ExpressionVisitor
+internal sealed class PrintCollectionVisitor : ExpressionVisitor
 {
-    public override Expression? Visit(Expression? node) =>
+    protected override Expression VisitConstant(ConstantExpression node) =>
         node switch
         {
-            ConstantExpression constantExpression => constantExpression switch
-            {
-                { Value: string } => constantExpression,
-                { Value: IQueryable } => constantExpression,
-                { Value: IEnumerable enumerable } => Expression.Constant(CreatePrinter(enumerable), enumerable.GetType()),
-                _ => constantExpression
-            },
-            _ => base.Visit(node)
+            { Value: string } => node,
+            { Value: IQueryable } => node,
+            { Value: IEnumerable enumerable } => Expression.Constant(CreatePrinter(enumerable), enumerable.GetType()),
+            _ => node
         };
 
     private object CreatePrinter(IEnumerable enumerable)

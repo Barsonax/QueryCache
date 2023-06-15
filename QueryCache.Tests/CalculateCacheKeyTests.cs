@@ -20,6 +20,39 @@ public class CalculateCacheKeyTests
     }
     
     [Fact]
+    public void VariablesAreEvaluated_NestedProperty()
+    {
+        //Arrange
+        var variable = Guid.NewGuid().ToString();
+        var query = new List<Account>().AsQueryable()
+            .Where(x => x.NestedAccount.Name == variable);
+        
+        //Act
+        var key = query.CalculateCacheKey();
+        
+        //Assert
+        key.Should().Contain(variable);
+    }
+    
+    [Fact]
+    public void VariablesAreEvaluated_NestedVariable()
+    {
+        //Arrange
+        var variableContainer = new
+        {
+            nestedVariable = Guid.NewGuid().ToString()
+        };
+        var query = new List<Account>().AsQueryable()
+            .Where(x => x.NestedAccount.Name == variableContainer.nestedVariable);
+        
+        //Act
+        var key = query.CalculateCacheKey();
+        
+        //Assert
+        key.Should().Contain(variableContainer.nestedVariable);
+    }
+    
+    [Fact]
     public void CollectionsArePrinted()
     {
         //Arrange
@@ -65,7 +98,7 @@ public class CalculateCacheKeyTests
     }
     
     [Fact]
-    public void Where_CollectionsArePrinted_And_VariablesAreEvaluated_2()
+    public void Where_And_Join_CollectionsArePrinted_And_VariablesAreEvaluated()
     {
         //Arrange
         var containsData = new List<string>()
@@ -95,5 +128,5 @@ public class CalculateCacheKeyTests
 public class Account
 {
     public string Name { get; set; }
-    public List<string> Operators { get; set; }
+    public Account NestedAccount { get; set; }
 }
