@@ -6,17 +6,24 @@ I had a idea to create a extension method on a IQueryable<T> that caches the que
 As calculating the cache keys should be as fast as possible benchmarks have been added in order to measure the time this takes:
 
 ```
-|            Method |                Job |            Runtime | WhereClauses |       Mean |     Error |    StdDev |    Gen0 |   Gen1 | Allocated |
-|------------------ |------------------- |------------------- |------------- |-----------:|----------:|----------:|--------:|-------:|----------:|
-| CalculateCacheKey |           .NET 7.0 |           .NET 7.0 |            1 |   7.025 us | 0.0403 us | 0.0377 us |  0.4807 |      - |   3.97 KB |
-| CalculateCacheKey | .NET Framework 4.8 | .NET Framework 4.8 |            1 | 186.305 us | 1.0505 us | 0.9826 us |  2.9297 | 1.4648 |  19.46 KB |
-| CalculateCacheKey |           .NET 7.0 |           .NET 7.0 |            2 |  13.702 us | 0.0745 us | 0.0697 us |  0.8698 |      - |   7.19 KB |
-| CalculateCacheKey | .NET Framework 4.8 | .NET Framework 4.8 |            2 | 358.398 us | 1.0477 us | 0.8749 us |  5.8594 | 2.9297 |  38.16 KB |
-| CalculateCacheKey |           .NET 7.0 |           .NET 7.0 |            3 |  20.006 us | 0.1352 us | 0.1265 us |  1.3123 |      - |  10.81 KB |
-| CalculateCacheKey | .NET Framework 4.8 | .NET Framework 4.8 |            3 | 534.311 us | 6.7726 us | 6.3351 us |  8.7891 | 3.9063 |  57.26 KB |
-| CalculateCacheKey |           .NET 7.0 |           .NET 7.0 |            4 |  26.305 us | 0.1354 us | 0.1266 us |  1.7090 |      - |  14.03 KB |
-| CalculateCacheKey | .NET Framework 4.8 | .NET Framework 4.8 |            4 | 698.614 us | 4.4373 us | 4.1506 us | 11.7188 | 5.8594 |  75.95 KB |
-| CalculateCacheKey |           .NET 7.0 |           .NET 7.0 |            5 |  33.525 us | 0.3141 us | 0.2623 us |  2.0752 |      - |  17.24 KB |
-| CalculateCacheKey | .NET Framework 4.8 | .NET Framework 4.8 |            5 | 868.777 us | 4.2640 us | 3.9886 us | 14.6484 | 6.8359 |  94.64 KB |
+BenchmarkDotNet=v0.13.5, OS=Windows 10 (10.0.19045.3086/22H2/2022Update)
+AMD Ryzen 9 3900X, 1 CPU, 24 logical and 12 physical cores
+  [Host]             : .NET Framework 4.8 (4.8.4644.0), X64 RyuJIT VectorSize=256
+  .NET 7.0           : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  .NET Framework 4.8 : .NET Framework 4.8 (4.8.4644.0), X64 RyuJIT VectorSize=256
+
+
+|            Method |                Job |            Runtime | WhereClauses |      Mean |     Error |    StdDev |   Gen0 | Allocated |
+|------------------ |------------------- |------------------- |------------- |----------:|----------:|----------:|-------:|----------:|
+| CalculateCacheKey |           .NET 7.0 |           .NET 7.0 |            1 |  4.737 us | 0.0177 us | 0.0165 us | 0.3433 |   2.81 KB |
+| CalculateCacheKey | .NET Framework 4.8 | .NET Framework 4.8 |            1 | 17.715 us | 0.0377 us | 0.0315 us | 0.7629 |   4.88 KB |
+| CalculateCacheKey |           .NET 7.0 |           .NET 7.0 |            2 |  8.923 us | 0.0322 us | 0.0301 us | 0.5951 |   4.88 KB |
+| CalculateCacheKey | .NET Framework 4.8 | .NET Framework 4.8 |            2 | 34.120 us | 0.0942 us | 0.0881 us | 1.4038 |   8.99 KB |
+| CalculateCacheKey |           .NET 7.0 |           .NET 7.0 |            3 | 13.042 us | 0.0374 us | 0.0331 us | 0.8850 |   7.34 KB |
+| CalculateCacheKey | .NET Framework 4.8 | .NET Framework 4.8 |            3 | 50.303 us | 0.1524 us | 0.1425 us | 2.1362 |  13.49 KB |
+| CalculateCacheKey |           .NET 7.0 |           .NET 7.0 |            4 | 17.254 us | 0.0652 us | 0.0610 us | 1.1292 |    9.4 KB |
+| CalculateCacheKey | .NET Framework 4.8 | .NET Framework 4.8 |            4 | 65.648 us | 0.2358 us | 0.2206 us | 2.8076 |  17.61 KB |
+| CalculateCacheKey |           .NET 7.0 |           .NET 7.0 |            5 | 21.377 us | 0.0819 us | 0.0766 us | 1.3733 |  11.45 KB |
+| CalculateCacheKey | .NET Framework 4.8 | .NET Framework 4.8 |            5 | 81.581 us | 0.1786 us | 0.1583 us | 3.4180 |  21.72 KB |
 
 ```
