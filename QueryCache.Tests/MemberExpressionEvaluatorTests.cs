@@ -14,7 +14,7 @@ public class MemberExpressionEvaluatorTests
         Expression<Func<string>> expression = () => variable;
 
         //Act
-        var result = MemberExpressionEvaluator.Evaluate((MemberExpression)expression.Body);
+        var result = ExpressionEvaluator.Evaluate(expression.Body);
 
         //Assert
         result.Should().Be(variable);
@@ -32,9 +32,27 @@ public class MemberExpressionEvaluatorTests
         Expression<Func<string>> expression = () => variableContainer.nestedVariable;
 
         //Act
-        var result = MemberExpressionEvaluator.Evaluate((MemberExpression)expression.Body);
+        var result = ExpressionEvaluator.Evaluate(expression.Body);
 
         //Assert
         result.Should().Be(variableContainer.nestedVariable);
+    }
+    
+    [Fact]
+    public void NestedVariableWithMethodCall()
+    {
+        //Arrange
+        var variableContainer = new
+        {
+            nestedVariable = new [] { "foobar54" }
+        };
+        
+        Expression<Func<bool>> expression = () => variableContainer.nestedVariable.Contains("foobar54");
+
+        //Act
+        var result = ExpressionEvaluator.Evaluate(expression.Body);
+
+        //Assert
+        result.Should().Be(true);
     }
 }
