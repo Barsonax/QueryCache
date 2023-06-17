@@ -17,12 +17,5 @@ public static class ExpressionEvaluator
     {
         FieldInfo fieldInfo => fieldInfo.GetValue(instance),
         PropertyInfo propertyInfo => propertyInfo.GetValue(instance),
-        _ => ThrowArgumentOutOfRangeException(nameof(memberInfo), memberInfo, memberInfo.GetType().Name)
     };
-    
-    private static object ThrowArgumentOutOfRangeException(string? name, object? value, string? message)
-    {
-        ThrowHelper.ThrowArgumentOutOfRangeException(name, value, message);
-        return null;
-    }
 }

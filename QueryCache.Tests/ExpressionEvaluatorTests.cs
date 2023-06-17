@@ -3,7 +3,7 @@ using FluentAssertions;
 
 namespace QueryCache.Tests;
 
-public class MemberExpressionEvaluatorTests
+public class ExpressionEvaluatorTests
 {
     [Fact]
     public void Variable()
@@ -30,7 +30,7 @@ public class MemberExpressionEvaluatorTests
         };
         
         Expression<Func<string>> expression = () => variableContainer.nestedVariable;
-
+        
         //Act
         var result = ExpressionEvaluator.Evaluate(expression.Body);
 
