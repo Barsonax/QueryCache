@@ -10,18 +10,24 @@ internal sealed class PrintCollectionVisitor : ExpressionVisitor
         {
             { Value: string } => node,
             { Value: IQueryable } => node,
-            { Value: IEnumerable enumerable } => Expression.Constant(CreatePrinter(enumerable), enumerable.GetType()),
+            { Value: IEnumerable enumerable } => CreateExpressionPrinter(enumerable),
             _ => node
         };
+
+    private Expression CreateExpressionPrinter(IEnumerable enumerable)
+    {
+        var printer = CreatePrinter(enumerable);
+        return Expression.Constant(printer, printer.GetType());
+    }
 
     private object CreatePrinter(IEnumerable enumerable)
     {
         var elementType = GetCollectionType(enumerable.GetType());
-        
+
         var printerType = typeof(PrintedList<>).MakeGenericType(elementType);
         return Activator.CreateInstance(printerType, enumerable)!;
     }
-    
+
     private Type GetCollectionType(Type type) =>
         type switch
         {
@@ -36,6 +42,6 @@ internal sealed class PrintCollectionVisitor : ExpressionVisitor
             this.AddRange(enumerable.Cast<T>());
         }
 
-        public override string ToString() => $"{{{string.Join(",", this)}}}" ;
+        public override string ToString() => $"{{{string.Join(",", this)}}}";
     }
 }

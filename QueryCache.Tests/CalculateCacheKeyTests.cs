@@ -53,10 +53,30 @@ public class CalculateCacheKeyTests
     }
     
     [Fact]
-    public void CollectionsArePrinted()
+    public void ListsArePrinted()
     {
         //Arrange
         var containsData = new List<string>()
+        {
+            "Operator1",
+            "Operator2"
+        };
+
+        var query = new List<Account>().AsQueryable()
+            .Where(x => containsData.Contains(x.Name));
+        
+        //Act
+        var key = query.CalculateCacheKey();
+        
+        //Assert
+        key.Should().Contain("{Operator1,Operator2}");
+    }
+    
+    [Fact]
+    public void ArraysArePrinted()
+    {
+        //Arrange
+        var containsData = new string[]
         {
             "Operator1",
             "Operator2"
