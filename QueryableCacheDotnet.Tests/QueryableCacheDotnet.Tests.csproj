@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\QueryCache\QueryCache.csproj" />
+      <ProjectReference Include="..\QueryableCacheDotnet\QueryableCacheDotnet.csproj" />
     </ItemGroup>
 
 </Project>

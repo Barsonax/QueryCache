@@ -1,7 +1,6 @@
 ﻿using System.Runtime.Caching;
-using FluentAssertions;
 
-namespace QueryCache.Tests;
+namespace QueryableCacheDotnet.Tests;
 
 public class CacheTests
 {

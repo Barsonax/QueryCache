@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace QueryCache;
+﻿namespace QueryableCacheDotnet;
 
 internal sealed class EvaluateVisitor : ExpressionVisitor
 {

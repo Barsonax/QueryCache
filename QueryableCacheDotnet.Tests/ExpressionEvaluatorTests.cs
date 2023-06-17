@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
-using FluentAssertions;
 
-namespace QueryCache.Tests;
+namespace QueryableCacheDotnet.Tests;
 
 public class ExpressionEvaluatorTests
 {

@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>10</LangVersion>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\QueryCache\QueryCache.csproj" />
+      <ProjectReference Include="..\QueryableCacheDotnet\QueryableCacheDotnet.csproj" />
     </ItemGroup>
 
 </Project>

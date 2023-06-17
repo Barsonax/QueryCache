@@ -1,7 +1,6 @@
-﻿using System.Linq.Expressions;
-using System.Reflection;
+﻿using System.Reflection;
 
-namespace QueryCache;
+namespace QueryableCacheDotnet;
 
 public static class ExpressionEvaluator
 {
@@ -12,7 +11,9 @@ public static class ExpressionEvaluator
         _ => Expression.Lambda(expression).Compile(false).DynamicInvoke() // Compiling the expression is expensive, especially on netframework so we only do it if there is not a easy shortcut.
     };
 
+#pragma warning disable CS8509
     private static object GetMemberValue(MemberInfo memberInfo, object instance) => memberInfo switch
+#pragma warning restore CS8509
     {
         FieldInfo fieldInfo => fieldInfo.GetValue(instance),
         PropertyInfo propertyInfo => propertyInfo.GetValue(instance),

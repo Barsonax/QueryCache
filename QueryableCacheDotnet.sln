@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryCache", "QueryCache\QueryCache.csproj", "{6CE829DD-872B-4E0E-8665-734E95449E64}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryableCacheDotnet", "QueryableCacheDotnet\QueryableCacheDotnet.csproj", "{6CE829DD-872B-4E0E-8665-734E95449E64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryCache.Tests", "QueryCache.Tests\QueryCache.Tests.csproj", "{D37F3C47-CA71-4877-8F6F-5F484093B782}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryableCacheDotnet.Tests", "QueryableCacheDotnet.Tests\QueryableCacheDotnet.Tests.csproj", "{D37F3C47-CA71-4877-8F6F-5F484093B782}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryCache.Benchmarks", "QueryCache.Benchmarks\QueryCache.Benchmarks.csproj", "{4B223821-DED8-452A-AE70-D87FBBC2579C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryableCacheDotnet.Benchmarks", "QueryableCacheDotnet.Benchmarks\QueryableCacheDotnet.Benchmarks.csproj", "{4B223821-DED8-452A-AE70-D87FBBC2579C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{6B6ADE3A-2E4B-4EA3-B435-3C0F3375016B}"
 	ProjectSection(SolutionItems) = preProject

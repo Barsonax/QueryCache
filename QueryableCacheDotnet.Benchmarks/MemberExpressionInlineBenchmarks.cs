@@ -3,6 +3,8 @@ using System.Reflection;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 
+namespace QueryableCacheDotnet.Benchmarks;
+
 [MemoryDiagnoser]
 [SimpleJob(RuntimeMoniker.Net48)]
 [SimpleJob(RuntimeMoniker.Net70)]
@@ -42,15 +44,15 @@ public class MemberExpressionInlineBenchmarks
         return Expression.Constant(Expression.Lambda<Func<string>>(MemberExpression).Compile().DynamicInvoke());
     }
     /*
-    [Benchmark]
-    public Expression LambdaCompile()
-    {
-        return Expression.Constant(Expression.Lambda(MemberExpression).Compile().DynamicInvoke());
-    }
-    
-    [Benchmark]
-    public Expression LambdaCompileInterpolation()
-    {
-        return Expression.Constant(Expression.Lambda(MemberExpression).Compile(true).DynamicInvoke());
-    }*/
+[Benchmark]
+public Expression LambdaCompile()
+{
+    return Expression.Constant(Expression.Lambda(MemberExpression).Compile().DynamicInvoke());
+}
+
+[Benchmark]
+public Expression LambdaCompileInterpolation()
+{
+    return Expression.Constant(Expression.Lambda(MemberExpression).Compile(true).DynamicInvoke());
+}*/
 }

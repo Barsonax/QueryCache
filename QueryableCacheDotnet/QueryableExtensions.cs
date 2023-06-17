@@ -1,8 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq.Expressions;
 using System.Runtime.Caching;
 
-namespace QueryCache;
+namespace QueryableCacheDotnet;
 
 public static class QueryableExtensions
 {

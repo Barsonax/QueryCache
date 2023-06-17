@@ -1,7 +1,6 @@
 ﻿using System.Collections;
-using System.Linq.Expressions;
 
-namespace QueryCache;
+namespace QueryableCacheDotnet;
 
 internal sealed class PrintCollectionVisitor : ExpressionVisitor
 {
