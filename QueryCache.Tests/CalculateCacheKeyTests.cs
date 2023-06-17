@@ -147,6 +147,6 @@ public class CalculateCacheKeyTests
 
 public class Account
 {
-    public string Name { get; set; }
-    public Account NestedAccount { get; set; }
+    public string? Name { get; set; }
+    public Account? NestedAccount { get; set; }
 }
