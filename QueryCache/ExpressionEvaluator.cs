@@ -19,7 +19,7 @@ public static class ExpressionEvaluator
         PropertyInfo propertyInfo => propertyInfo.GetValue(instance),
         _ => ThrowArgumentOutOfRangeException(nameof(memberInfo), memberInfo, memberInfo.GetType().Name)
     };
-
+    
     private static object ThrowArgumentOutOfRangeException(string? name, object? value, string? message)
     {
         ThrowHelper.ThrowArgumentOutOfRangeException(name, value, message);
